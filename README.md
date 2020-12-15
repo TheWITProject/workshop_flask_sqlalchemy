@@ -96,7 +96,7 @@ This method allows you to query your table by some condition (e.g., `Task.name =
 
 
 ### 🖥 Write a simple route for `GET /tasks/`
-In `app/api.py`, write a simple route to get all tasks from your database. You can use the `Task.query.all()` method.
+In `app/api.py`, write a simple route to get all tasks from your database. You can use the `Task.query.all()` method. When you are done, test your route by sending a `GET` request to `localhost:5000/tasks` in Postman.
 <br>
 <details><summary>Click here for the solution.</summary>
 <hr>
@@ -148,7 +148,7 @@ A list of converters available includes `string`, `int`, `float`, `path`, and `u
 
 
 ### 🖥 Write a simple route for `GET /tasks/{id}`
-In `app/api.py`, write a simple route to get a task by primary key from your database. You can use the `Task.query.get(<id>)` method.
+In `app/api.py`, write a simple route to get a task by primary key from your database. You can use the `Task.query.get(<id>)` method. When you are done, test your route by sending a `GET` request to `localhost:5000/tasks/1` in Postman.
 <br>
 <details><summary>Click here for the solution.</summary>
 <hr>
@@ -176,17 +176,26 @@ def get_or_delete_one_task(task_id):
 <hr>
 
 ### `request` Object
-
+Flask parses incoming requests for data and stores that data on the global `request` object. You can use this `request` object to get information about the request that was sent and then use it in the functions you are writing and binding to some routes. The request is an extension of the `Request` object, so you can read more about the method this object has [here](https://flask.palletsprojects.com/en/1.1.x/api/#flask.Request).
 
 ### `request.method`
+Right now, we can focus on the `method` attribute on `request`, which stores information about the method (`GET`, `POST`, `PUT`, `PATCH`, `DELETE`, etc.) of our most recent HTTP request. This is helpful for us, because it allows us to reuse the same endpoint for multiple methods by writing control flow statements based on the method on out `request` object. You can read more documentation on this attribute [here](https://flask.palletsprojects.com/en/1.1.x/api/#flask.Request.method).
 
+```py
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        return login_user()
+    else:
+        return show_the_login_form()
+```
 
 <hr>
 </details><br>
 
 
 ### 🖥 Let's extend that route to handle `DELETE /tasks/{id}`
-In `app/api.py`, extend the `/tasks/{id} route you wrote to get a task by primary key so that the route can be used to delete a task by primary key. You can use the `db.session.delete(<id>)` method.
+In `app/api.py`, extend the `/tasks/{id}` route you wrote to get a task by primary key so that the route can be used to delete a task by primary key. You can use the `db.session.delete(<id>)` method. When you are done, test your route by sending a `DELETE` request to `localhost:5000/tasks/1` in Postman.
 <br>
 <details><summary>Click here for the solution.</summary>
 <hr>
@@ -215,7 +224,7 @@ def get_or_delete_one_task(task_id):
 
 
 ### 🖥 Let's write a route that handles completing a task: `PUT /tasks/{id}/complete`
-In `app/api.py`, write a simple route to set a task to completed.
+In `app/api.py`, write a simple route to set a task to completed. When you are done, test your route by sending a `PUT` request to `localhost:5000/tasks/2/complete` in Postman.
 <br>
 <details><summary>Click here for the solution.</summary>
 <hr>
@@ -244,24 +253,24 @@ def complete_task(task_id):
 <details><summary>💡 What is query parameter in Flask?</summary>
 <hr>
 
-### `request` Object
-
+### Query Parameter
+A query parameter is a way of sending key-value pairs to an endpoint. In a URL, this is typically represented by a series of `key=value` pairs following a `?`. You might remember providing query parameters when using the Google Maps API. For example, you might have sent a GET request to `https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=Museum%20of%20Contemporary%20Art`. In this case, the key is `input` and the value is `Museum%20of%20Contemporary%20Art`.
 
 ### `request.args`
-
+As we mentioned earlier, Flask parses an HTTP request for data and stores data on the global `request` object. This includes data that was sent from a form, in the request body, or as a query parameter. The `args` attribute on the global `request` object receives information about any query parameters that were passed via the HTTP request. Since this data is stored as a dictionary, you can then use the Python `get` method to access data about a specific key.
 
 <hr>
 </details><br>
 
 
 ### 🖥 Let's write a route to handle querying by a person's name `GET /tasks/query?person={person}`
-In `app/api.py`, write a simple route to get all tasks by a query search of someone's name. You can use the `request.args` object to access the query parameter value. Then, you can use the `Person.query.filter(<condition>)` method to find that person's tasks.
+In `app/api.py`, write a simple route to get all tasks by a query search of someone's name. You can use the `request.args` object to access the query parameter value. Then, you can use the `Person.query.filter(<condition>)` method to find that person's tasks. When you are done, test your route by sending a `GET` request to `localhost:5000/tasks/query?person="Joy Ann` in Postman.
 <br>
 <details><summary>Click here for the solution.</summary>
 <hr>
   
 ```py
-@app.route('/tasks/field')
+@app.route('/tasks/query')
 def get_all_tasks_by_person():
     person = request.args.get("person")
     person_id = Person.query.filter(Person.name == person).first().id
