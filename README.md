@@ -79,7 +79,7 @@ Your models are defined by `app/models.py`. You'll notice that all of the SQL he
 
 
 ### 🖥 Write a simple route for `GET /tasks/`
-1. Blah blah blah
+In `app/api.py`, write a simple route to get all tasks from your database. You can use the `Task.query.all()` method.
 <br>
 <details><summary>Click here for the solution.</summary>
 <hr>
@@ -115,7 +115,7 @@ def all_tasks():
 
 
 ### 🖥 Write a simple route for `GET /tasks/{id}`
-1. Blah blah blah
+In `app/api.py`, write a simple route to get a task by primary key from your database. You can use the `Task.query.get(<id>)` method.
 <br>
 <details><summary>Click here for the solution.</summary>
 <hr>
@@ -153,7 +153,7 @@ def get_or_delete_one_task(task_id):
 
 
 ### 🖥 Let's extend that route to handle `DELETE /tasks/{id}`
-1. Blah blah blah
+In `app/api.py`, extend the `/tasks/{id} route you wrote to get a task by primary key so that the route can be used to delete a task by primary key. You can use the `db.session.delete(<id>)` method.
 <br>
 <details><summary>Click here for the solution.</summary>
 <hr>
@@ -182,7 +182,7 @@ def get_or_delete_one_task(task_id):
 
 
 ### 🖥 Let's write a route that handles completing a task: `PUT /tasks/{id}/complete`
-1. Blah blah blah
+In `app/api.py`, write a simple route to set a task to completed.
 <br>
 <details><summary>Click here for the solution.</summary>
 <hr>
@@ -222,7 +222,7 @@ def complete_task(task_id):
 
 
 ### 🖥 Let's write a route to handle querying by a person's name `GET /tasks/query?person={person}`
-1. Blah blah blah
+In `app/api.py`, write a simple route to get all tasks by a query search of someone's name. You can use the `request.args` object to access the query parameter value. Then, you can use the `Person.query.filter(<expression>)` method to find that person's tasks.
 <br>
 <details><summary>Click here for the solution.</summary>
 <hr>
